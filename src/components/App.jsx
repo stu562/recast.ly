@@ -1,25 +1,30 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import Search from './Search.js';
+import searchYouTube from '../lib/searchYouTube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: '',
-      currentVideo: this.props.data[0]
+      currentVideo: this.props.data[0],
+      list: this.props.data
     }
-    this.handleQueryInput = this.handleQueryInput.bind(this);
+    this.updateVideo = this.updateVideo.bind(this);
     this.handleClickVideo = this.handleClickVideo.bind(this);
+    this.updateList = this.updateList.bind(this);
   }
-
-  handleQueryInput(e) {
-    //updates and changes the constructors state
-    this.setState({ query: e.target.value }); 
-  } 
 
   handleClickVideo(video) {
     this.setState({ currentVideo: video });
+  }
+
+  updateVideo(video) {
+    this.setState({ currentVideo: video })
+  }
+
+  updateList(videos) {
+    this.setState({ list: videos })
   }
 
   render() {
@@ -27,7 +32,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><Search search={this.state.query}/></div>
+            <div><Search searchYouTube={searchYouTube} updateVideo={this.updateVideo} updateList={this.updateList} /></div>
           </div>
         </nav>
         <div className="row">
@@ -35,7 +40,7 @@ class App extends React.Component {
             <div><VideoPlayer video={this.state.currentVideo}/></div>
           </div>
           <div className="col-md-5">
-            <div><VideoList handleClickVideo={this.handleClickVideo} videos={this.props.data}/></div>
+            <div><VideoList handleClickVideo={this.handleClickVideo} videos={this.state.list}/></div>
           </div>
         </div>
       </div>

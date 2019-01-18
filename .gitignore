@@ -1,7 +1,7 @@
 ## Mac OSX ##
 .DS_Store
 
-## NPM ##
+## NPM ## 
 node_modules/
 
 ## Compiled files ##
